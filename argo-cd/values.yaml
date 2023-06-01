@@ -87,10 +87,10 @@ global:
   #  fsGroup: 999
 
   # -- Mapping between IP and hostnames that will be injected as entries in the pod's hosts files
-  hostAliases: []
-  # - ip: 10.20.30.40
-  #   hostnames:
-  #   - git.myhostname
+  hostAliases:
+  - ip: 10.20.30.40
+    hostnames:
+    - largo.k3s.lan
 
   # Default network policy rules used by all components
   networkPolicy:
@@ -171,7 +171,7 @@ configs:
 
     # -- Enable exec feature in Argo UI
     ## Ref: https://argo-cd.readthedocs.io/en/latest/operator-manual/rbac/#exec-resource
-    exec.enabled: false
+    exec.enabled: true
 
     # -- Enable local admin user
     ## Ref: https://argo-cd.readthedocs.io/en/latest/faq/#how-to-disable-admin-user
