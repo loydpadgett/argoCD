@@ -811,7 +811,7 @@ controller:
       # -- PrometheusRule selector
       selector: 
         matchLabels: 
-          app.kubernetes.io/instance=prometheus
+          prometheus
 
       # -- PrometheusRule labels
       additionalLabels: {}
