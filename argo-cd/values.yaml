@@ -766,12 +766,16 @@ controller:
     enabled: true
     applicationLabels:
       # -- Enables additional labels in argocd_app_labels metric
-      enabled: false
+      enabled: true
       # -- Additional labels
       labels: []
     service:
       # -- Metrics service annotations
-      annotations: {}
+      annotations:
+        prometheus.io/path: /metrics 
+        prometheus.io/port: "8082"
+        prometheus.io/scrape: "true"
+        
       # -- Metrics service labels
       labels: {}
       # -- Metrics service port
@@ -789,12 +793,11 @@ controller:
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
       selector:
-          matchLabels:
-            app.kubernetes.io/component: application-controller 
-            #prometheus: l-argo-metrics 
+        matchLabels:
+          app.kubernetes.io/component: application-controller 
 
       # -- Prometheus ServiceMonitor scheme
-      scheme: ""
+      scheme: "http"
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
@@ -810,8 +813,6 @@ controller:
       namespace: "monitor" # "monitoring"
       # -- PrometheusRule selector
       selector: 
-        matchLabels: 
-          app.kubernetes.io/instance=prometheus
 
       # -- PrometheusRule labels
       additionalLabels: {}
