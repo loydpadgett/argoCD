@@ -35,7 +35,7 @@ crds:
   # -- Install and upgrade CRDs
   install: true
   # -- Keep CRDs on chart uninstall
-  keep: true
+  keep: false
   # -- Annotations to be added to all CRDs
   annotations: {}
 
@@ -763,7 +763,7 @@ controller:
   ## Application controller metrics configuration
   metrics:
     # -- Deploy metrics service
-    enabled: false
+    enabled: true
     applicationLabels:
       # -- Enables additional labels in argocd_app_labels metric
       enabled: false
@@ -780,7 +780,7 @@ controller:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: false
+      enabled: true
       # -- Prometheus ServiceMonitor interval
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -788,8 +788,8 @@ controller:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
-        # prometheus: kube-prometheus
+      #selector:
+      #  prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
@@ -805,7 +805,7 @@ controller:
       # -- Deploy a PrometheusRule for the application controller
       enabled: false
       # -- PrometheusRule namespace
-      namespace: "" # "monitoring"
+      namespace: "monitor" # "monitoring"
       # -- PrometheusRule selector
       selector: {}
         # prometheus: kube-prometheus
@@ -872,7 +872,7 @@ dex:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: false
+      enabled: true
       # -- Prometheus ServiceMonitor interval
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -1328,7 +1328,7 @@ redis:
 
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: false
+      enabled: true
       # -- Interval at which metrics should be scraped
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -1791,7 +1791,7 @@ server:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: false
+      enabled: true
       # -- Prometheus ServiceMonitor interval
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -2259,7 +2259,7 @@ repoServer:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: false
+      enabled: true
       # -- Prometheus ServiceMonitor interval
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
