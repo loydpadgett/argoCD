@@ -789,7 +789,9 @@ controller:
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
       selector:
-        prometheus: l-argo-metrics 
+          matchLabels:
+            app.kubernetes.io/name: argocd-applicationset-controller
+            #prometheus: l-argo-metrics 
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
@@ -872,7 +874,7 @@ dex:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor interval
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -1779,7 +1781,7 @@ server:
   ## Server metrics service configuration
   metrics:
     # -- Deploy metrics service
-    enabled: false
+    enabled: true
     service:
       # -- Metrics service annotations
       annotations: {}
@@ -1800,7 +1802,10 @@ server:
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
       selector: 
-        prometheus: l-argo-metrics
+        matchLabels:
+          name: argocd-server-metrics
+          labels:
+            app.kubernetes.io/name: argocd-server-metrics
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
@@ -2247,7 +2252,7 @@ repoServer:
   ## Repo server metrics service configuration
   metrics:
     # -- Deploy metrics service
-    enabled: false
+    enabled: true
     service:
       # -- Metrics service annotations
       annotations: {}
@@ -2268,7 +2273,8 @@ repoServer:
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
       selector: 
-        prometheus: l-argo-metrics
+        matchLabels:
+          app.kubernetes.io/name: argocd-repo-server
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
@@ -2400,7 +2406,7 @@ applicationSet:
   ## Metrics service configuration
   metrics:
     # -- Deploy metrics service
-    enabled: false
+    enabled: true
     service:
       # -- Metrics service annotations
       annotations: {}
@@ -2421,7 +2427,8 @@ applicationSet:
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
       selector: 
-        prometheus: l-argo-metrics
+        matchLabels:
+          app.kubernetes.io/name: argocd-metrics
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
@@ -2717,7 +2724,7 @@ notifications:
 
   metrics:
     # -- Enables prometheus metrics server
-    enabled: false
+    enabled: true
     # -- Metrics port
     port: 9001
     service:
