@@ -788,15 +788,15 @@ controller:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      #selector:
-      #  prometheus: kube-prometheus
+      selector:
+        prometheus: l-argo-metrics 
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "" # "monitoring"
+      namespace: "monitor" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -880,15 +880,15 @@ dex:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
-        # prometheus: kube-prometheus
+      selector:
+        prometheus: l-argo-metrics
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "" # "monitoring"
+      namespace: "monitor" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -1336,8 +1336,8 @@ redis:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
-        # prometheus: kube-prometheus
+      selector:
+        prometheus: l-argo-metrics
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
@@ -1799,15 +1799,15 @@ server:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
-        # prometheus: kube-prometheus
+      selector: 
+        prometheus: l-argo-metrics
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: ""  # monitoring
+      namespace: "monitor"  # monitoring
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2267,15 +2267,15 @@ repoServer:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
-        # prometheus: kube-prometheus
+      selector: 
+        prometheus: l-argo-metrics
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "" # "monitoring"
+      namespace: "monitor" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2412,7 +2412,7 @@ applicationSet:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: false
+      enabled: true
       # -- Prometheus ServiceMonitor interval
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -2420,15 +2420,15 @@ applicationSet:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
-        # prometheus: kube-prometheus
+      selector: 
+        prometheus: l-argo-metrics
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: ""  # monitoring
+      namespace: "monitor"  # monitoring
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2729,10 +2729,10 @@ notifications:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: false
+      enabled: true
       # -- Prometheus ServiceMonitor selector
-      selector: {}
-        # prometheus: kube-prometheus
+      selector: 
+        prometheus: l-argo-metrics
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
