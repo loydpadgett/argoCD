@@ -571,7 +571,7 @@ controller:
 
   # -- The number of application controller pods to run.
   # Additional replicas will cause sharding of managed clusters across number of replicas.
-  replicas: 1
+  replicas: 3
 
   ## Application controller Pod Disruption Budget
   ## Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
@@ -1355,7 +1355,7 @@ redis:
 # Check the redis-ha chart for more properties
 redis-ha:
   # -- Enables the Redis HA subchart and disables the custom Redis single node deployment
-  enabled: true
+  enabled: false
   ## Prometheus redis-exporter sidecar
   exporter:
     # -- Enable Prometheus redis-exporter sidecar
@@ -1422,7 +1422,7 @@ server:
   name: server
 
   # -- The number of server pods to run
-  replicas: 1
+  replicas: 3
 
   ## Argo CD server Horizontal Pod Autoscaler
   autoscaling:
@@ -1978,7 +1978,7 @@ repoServer:
   name: repo-server
 
   # -- The number of repo server pods to run
-  replicas: 1
+  replicas: 3
 
   ## Repo server Horizontal Pod Autoscaler
   autoscaling:
