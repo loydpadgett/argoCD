@@ -176,7 +176,8 @@ configs:
     # -- Enable local admin user
     ## Ref: https://argo-cd.readthedocs.io/en/latest/faq/#how-to-disable-admin-user
     admin.enabled: true
-
+    accounts.lpadgett: apiKey, login
+    accounts.lpadgett.enabled: "true"
     # -- Timeout to discover if a new manifests version got published to the repository
     timeout.reconciliation: 300s
 
@@ -274,7 +275,7 @@ configs:
     # -- The name of the default role which Argo CD will falls back to, when authorizing API requests (optional).
     # If omitted or empty, users may be still be able to login, but will see no apps, projects, etc...
     policy.default: ''
-
+    
     # -- File containing user-defined policies and role definitions.
     # @default -- `''` (See [values.yaml])
     policy.csv: ''
@@ -520,7 +521,7 @@ configs:
     # -- Bcrypt hashed admin password
     ## Argo expects the password in the secret to be bcrypt hashed. You can create this hash with
     ## `htpasswd -nbBC 10 "" $ARGO_PWD | tr -d ':\n' | sed 's/$2y/$2a/'`
-    argocdServerAdminPassword: ""
+    argocdServerAdminPassword: "$2a$10$ASNd8q9F6LCgYE0VQYkxA.ty6cNKyaw/sW9zFiAYey48zn.0aXJbS"
     # -- Admin password modification time. Eg. `"2006-01-02T15:04:05Z"`
     # @default -- `""` (defaults to current time)
     argocdServerAdminPasswordMtime: ""
