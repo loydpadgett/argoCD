@@ -805,14 +805,17 @@ controller:
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
-      annotations: {}
+      annotations: 
+        prometheus.io/path: /metrics 
+        prometheus.io/port: "8082"
+        prometheus.io/scrape: "true"
     rules:
       # -- Deploy a PrometheusRule for the application controller
       enabled: true
       # -- PrometheusRule namespace
       namespace: "monitor" # "monitoring"
       # -- PrometheusRule selector
-      selector: 
+      #selector: 
 
       # -- PrometheusRule labels
       additionalLabels: {}
