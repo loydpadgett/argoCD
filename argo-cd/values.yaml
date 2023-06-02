@@ -176,8 +176,14 @@ configs:
     # -- Enable local admin user
     ## Ref: https://argo-cd.readthedocs.io/en/latest/faq/#how-to-disable-admin-user
     admin.enabled: true
+
+    # -- Enable local user
     accounts.lpadgett: apiKey, login
     accounts.lpadgett.enabled: "true"
+
+    # -- Enable Pipeline user
+    accounts.gitops-ci: apiKey
+
     # -- Timeout to discover if a new manifests version got published to the repository
     timeout.reconciliation: 300s
 
@@ -278,7 +284,10 @@ configs:
     
     # -- File containing user-defined policies and role definitions.
     # @default -- `''` (See [values.yaml])
-    policy.csv: ''
+    policy.csv: |
+      p, role:user-update, accounts, update, *, allow
+      p, role:user-update, accounts, get, *, allow
+      g, lpadgett, role:user-update
     # Policy rules are in the form:
     #  p, subject, resource, action, object, effect
     # Role definitions and bindings are in the form:
