@@ -179,7 +179,8 @@ configs:
 
     # -- Enable local user
     accounts.lpadgett: apiKey, login
-    accounts.lpadgett.enabled: "true"
+
+    accounts.jabel: apiKey, login
 
     # -- Enable Pipeline user
     accounts.gitops-ci: apiKey
