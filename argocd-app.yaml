@@ -11,3 +11,6 @@ spec:
     path: argo-cd/
     repoURL: https://github.com/loydpadgett/argoCD.git
     targetRevision: main
+  syncPolicy:
+    automated:
+      prune: false

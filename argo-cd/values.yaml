@@ -813,7 +813,7 @@ controller:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "monitor" # "monitoring"
+      namespace: "argocd-install" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -825,7 +825,7 @@ controller:
       # -- Deploy a PrometheusRule for the application controller
       enabled: true
       # -- PrometheusRule namespace
-      namespace: "monitor" # "monitoring"
+      namespace: "argocd-install" # "monitoring"
       # -- PrometheusRule selector
       #selector: 
 
@@ -907,7 +907,7 @@ dex:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "monitor" # "monitoring"
+      namespace: "argocd-install" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -1363,7 +1363,7 @@ redis:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "" # "monitoring"
+      namespace: "" # "argocd-install"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -1829,7 +1829,7 @@ server:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "monitor"  # monitoring
+      namespace: "argocd-install"  # monitoring
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2298,7 +2298,7 @@ repoServer:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "monitor" # "monitoring"
+      namespace: "argocd-install" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2452,7 +2452,7 @@ applicationSet:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "monitor"  # monitoring
+      namespace: "argocd-install"  # monitoring
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2761,7 +2761,7 @@ notifications:
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
       annotations: {}
-      # namespace: monitoring
+      # namespace: argocd-install
       # interval: 30s
       # scrapeTimeout: 10s
       # -- Prometheus ServiceMonitor scheme

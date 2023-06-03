@@ -9,7 +9,7 @@ spec:
       description: read and sync priviliges.
       policies:
         - p, proj:argocd:read-sync, applications, get, argocd/*, allow
-        - p, proj:argocd:read-sync, applications, sync argocd/*, allow
+        - p, proj:argocd:read-sync, applications, sync, argocd/*, allow
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
@@ -19,5 +19,3 @@ spec:
       server: https://kubernetes.default.svc
   sourceRepos:
     - https://github.com/loydpadgett/argoCD.git 
-
-
