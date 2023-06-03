@@ -6,7 +6,7 @@ spec:
   destination:
     namespace: argocd-install
     server: https://kubernetes.default.svc
-  project: default
+  project: argocd
   source:
     path: argo-cd/
     repoURL: https://github.com/loydpadgett/argoCD.git
