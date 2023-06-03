@@ -11,6 +11,3 @@ spec:
     path: argo-cd/kustomize/
     repoURL: https://github.com/loydpadgett/argoCD.git
     targetRevision: main
-  syncPolicy:
-    automated:
-      prune: false
