@@ -290,6 +290,7 @@ configs:
       p, role:user-update, accounts, get, *, allow
       p, role:user-update, projects, update, argocd, allow
       g, lpadgett, role:user-update
+
     # Policy rules are in the form:
     #  p, subject, resource, action, object, effect
     # Role definitions and bindings are in the form:
@@ -813,7 +814,7 @@ controller:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "monitor" # "monitoring"
+      namespace: "argocd-install" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -825,7 +826,7 @@ controller:
       # -- Deploy a PrometheusRule for the application controller
       enabled: true
       # -- PrometheusRule namespace
-      namespace: "monitor" # "monitoring"
+      namespace: "argocd-install" # "monitoring"
       # -- PrometheusRule selector
       #selector: 
 
@@ -907,7 +908,7 @@ dex:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "monitor" # "monitoring"
+      namespace: "argocd-install" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -1363,7 +1364,7 @@ redis:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "" # "monitoring"
+      namespace: "" # "argocd-install"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -1829,7 +1830,7 @@ server:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "monitor"  # monitoring
+      namespace: "argocd-install"  # monitoring
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2298,7 +2299,7 @@ repoServer:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "monitor" # "monitoring"
+      namespace: "argocd-install" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2452,7 +2453,7 @@ applicationSet:
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "monitor"  # monitoring
+      namespace: "argocd-install"  # monitoring
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
