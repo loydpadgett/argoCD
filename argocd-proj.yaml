@@ -6,18 +6,16 @@ metadata:
 spec:
   roles:
     - name: read-sync
-      description: read and sync priviliges.
+      description: read and sync privileges.
       policies:
         - p, proj:argocd:read-sync, applications, get, argocd/*, allow
-        - p, proj:argocd:read-sync, applications, sync argocd/*, allow
+        - p, proj:argocd:read-sync, applications, sync, argocd/*, allow
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
-  description: Project to configure argocd https://argo-cd.readthedocs.io/en/stable/user-guide/config-management-plugins/
+  description: Project to configure argocd self-management application.
   destinations:
     - namespace: argocd-install 
       server: https://kubernetes.default.svc
   sourceRepos:
     - https://github.com/loydpadgett/argoCD.git 
-
-

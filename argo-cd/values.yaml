@@ -290,6 +290,7 @@ configs:
       p, role:user-update, accounts, get, *, allow
       p, role:user-update, projects, update, argocd, allow
       g, lpadgett, role:user-update
+
     # Policy rules are in the form:
     #  p, subject, resource, action, object, effect
     # Role definitions and bindings are in the form:
