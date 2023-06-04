@@ -15,7 +15,7 @@ spec:
       kind: '*'
   description: Project to configure argocd self-management application.
   destinations:
-    - namespace: argocd-install 
+    - namespace: argocd
       server: https://kubernetes.default.svc
   sourceRepos:
     - https://github.com/loydpadgett/argoCD.git 

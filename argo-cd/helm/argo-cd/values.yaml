@@ -3,7 +3,7 @@
 ##
 
 # -- Provide a name in place of `argocd`
-nameOverride: l-argo
+nameOverride: argocd
 # -- String to fully override `"argo-cd.fullname"`
 fullnameOverride: ""
 # -- Override the Kubernetes version, which is used to evaluate certain manifests
@@ -87,10 +87,10 @@ global:
   #  fsGroup: 999
 
   # -- Mapping between IP and hostnames that will be injected as entries in the pod's hosts files
-  hostAliases:
-  - ip: 10.20.30.40
-    hostnames:
-    - largo.k3s.lan
+  hostAliases: []
+  # - ip: 10.20.30.40
+  #   hostnames:
+  #   - git.myhostname
 
   # Default network policy rules used by all components
   networkPolicy:
@@ -171,22 +171,14 @@ configs:
 
     # -- Enable exec feature in Argo UI
     ## Ref: https://argo-cd.readthedocs.io/en/latest/operator-manual/rbac/#exec-resource
-    exec.enabled: true
+    exec.enabled: false
 
     # -- Enable local admin user
     ## Ref: https://argo-cd.readthedocs.io/en/latest/faq/#how-to-disable-admin-user
-    admin.enabled: false
-
-    # -- Enable local user
-    accounts.lpadgett: apiKey, login
-
-    accounts.jabel: apiKey, login
-
-    # -- Enable Pipeline user
-    accounts.gitops-ci: apiKey
+    admin.enabled: true 
 
     # -- Timeout to discover if a new manifests version got published to the repository
-    timeout.reconciliation: 300s
+    timeout.reconciliation: 180s
 
     # -- Timeout to refresh application data as well as target manifests cache
     timeout.hard.reconciliation: 0s
@@ -275,22 +267,23 @@ configs:
     # If false, it is expected the configmap will be created by something else.
     # Argo CD will not work if there is no configmap created with the name above.
     create: true
+    accounts.lpadgett: apiKey, login
+    accounts.gitops-ci: apiKey
 
     # -- Annotations to be added to argocd-rbac-cm configmap
     annotations: {}
 
     # -- The name of the default role which Argo CD will falls back to, when authorizing API requests (optional).
     # If omitted or empty, users may be still be able to login, but will see no apps, projects, etc...
-    policy.default: 'role:readonly'
-    
+    policy.default: 'readonly'
+
     # -- File containing user-defined policies and role definitions.
     # @default -- `''` (See [values.yaml])
     policy.csv: |
-      p, role:user-update, accounts, update, *, allow
-      p, role:user-update, accounts, get, *, allow
-      p, role:user-update, projects, update, argocd, allow
-      g, lpadgett, role:user-update
-
+        p, role:user-update, accounts, update, *, allow
+        p, role:user-update, accounts, get, *, allow
+        p, role:user-update, projects, update, argocd, allow
+        g, lpadgett, role:user-update 
     # Policy rules are in the form:
     #  p, subject, resource, action, object, effect
     # Role definitions and bindings are in the form:
@@ -533,7 +526,7 @@ configs:
     # -- Bcrypt hashed admin password
     ## Argo expects the password in the secret to be bcrypt hashed. You can create this hash with
     ## `htpasswd -nbBC 10 "" $ARGO_PWD | tr -d ':\n' | sed 's/$2y/$2a/'`
-    argocdServerAdminPassword: "$2a$10$ASNd8q9F6LCgYE0VQYkxA.ty6cNKyaw/sW9zFiAYey48zn.0aXJbS"
+    argocdServerAdminPassword: ""
     # -- Admin password modification time. Eg. `"2006-01-02T15:04:05Z"`
     # @default -- `""` (defaults to current time)
     argocdServerAdminPasswordMtime: ""
@@ -584,7 +577,7 @@ controller:
 
   # -- The number of application controller pods to run.
   # Additional replicas will cause sharding of managed clusters across number of replicas.
-  replicas: 3
+  replicas: 1
 
   ## Application controller Pod Disruption Budget
   ## Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
@@ -689,13 +682,13 @@ controller:
   podLabels: {}
 
   # -- Resource limits and requests for the application controller pods
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 250m
-      memory: 256Mi
+  resources: {}
+  #  limits:
+  #    cpu: 500m
+  #    memory: 512Mi
+  #  requests:
+  #    cpu: 250m
+  #    memory: 256Mi
 
   # Application controller container ports
   containerPorts:
@@ -776,19 +769,15 @@ controller:
   ## Application controller metrics configuration
   metrics:
     # -- Deploy metrics service
-    enabled: true
+    enabled: false
     applicationLabels:
       # -- Enables additional labels in argocd_app_labels metric
-      enabled: true
+      enabled: false
       # -- Additional labels
       labels: []
     service:
       # -- Metrics service annotations
-      annotations:
-        prometheus.io/path: /metrics 
-        prometheus.io/port: "8082"
-        prometheus.io/scrape: "true"
-        
+      annotations: {}
       # -- Metrics service labels
       labels: {}
       # -- Metrics service port
@@ -805,30 +794,27 @@ controller:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector:
-        matchLabels:
-          app.kubernetes.io/component: application-controller 
+      selector: {}
+        # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor scheme
-      scheme: "http"
+      scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "argocd-install" # "monitoring"
+      namespace: "" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
-      annotations: 
-        prometheus.io/path: /metrics 
-        prometheus.io/port: "8082"
-        prometheus.io/scrape: "true"
+      annotations: {}
     rules:
       # -- Deploy a PrometheusRule for the application controller
-      enabled: true
+      enabled: false
       # -- PrometheusRule namespace
-      namespace: "argocd-install" # "monitoring"
+      namespace: "" # "monitoring"
       # -- PrometheusRule selector
-      #selector: 
+      selector: {}
+        # prometheus: kube-prometheus
 
       # -- PrometheusRule labels
       additionalLabels: {}
@@ -836,19 +822,19 @@ controller:
       annotations: {}
 
       # -- PrometheusRule.Spec for the application controller
-      spec: 
-      - alert: ArgoAppMissing
-        expr: |
-          absent(argocd_app_info) == 1
-        for: 15m
-        labels:
-          severity: critical
-        annotations:
-          summary: "[Argo CD] No reported applications"
-          description: >
-             Argo CD has not reported any applications data for the past 15 minutes which
-             means that it must be down or not functioning properly.  This needs to be
-             resolved for this cloud to continue to maintain state.
+      spec: []
+      # - alert: ArgoAppMissing
+      #   expr: |
+      #     absent(argocd_app_info) == 1
+      #   for: 15m
+      #   labels:
+      #     severity: critical
+      #   annotations:
+      #     summary: "[Argo CD] No reported applications"
+      #     description: >
+      #       Argo CD has not reported any applications data for the past 15 minutes which
+      #       means that it must be down or not functioning properly.  This needs to be
+      #       resolved for this cloud to continue to maintain state.
       # - alert: ArgoAppNotSynced
       #   expr: |
       #     argocd_app_info{sync_status!="Synced"} == 1
@@ -900,15 +886,15 @@ dex:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector:
-        prometheus: l-argo-metrics
+      selector: {}
+        # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "argocd-install" # "monitoring"
+      namespace: "" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -1348,7 +1334,7 @@ redis:
 
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Interval at which metrics should be scraped
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -1356,15 +1342,15 @@ redis:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector:
-        prometheus: l-argo-metrics
+      selector: {}
+        # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "" # "argocd-install"
+      namespace: "" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -1442,7 +1428,7 @@ server:
   name: server
 
   # -- The number of server pods to run
-  replicas: 3
+  replicas: 1
 
   ## Argo CD server Horizontal Pod Autoscaler
   autoscaling:
@@ -1786,7 +1772,7 @@ server:
     # -- Server service https port name, can be used to route traffic via istio
     servicePortHttpsName: https
     # -- LoadBalancer will get created with the IP specified in this field
-    loadBalancerIP: "10.10.40.37"
+    loadBalancerIP: ""
     # -- Source IP ranges to allow access to service from
     loadBalancerSourceRanges: []
     # -- Server service external IPs
@@ -1799,7 +1785,7 @@ server:
   ## Server metrics service configuration
   metrics:
     # -- Deploy metrics service
-    enabled: true
+    enabled: false
     service:
       # -- Metrics service annotations
       annotations: {}
@@ -1811,7 +1797,7 @@ server:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor interval
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -1819,18 +1805,15 @@ server:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: 
-        matchLabels:
-          name: argocd-server-metrics
-          labels:
-            app.kubernetes.io/name: argocd-server-metrics
+      selector: {}
+        # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "argocd-install"  # monitoring
+      namespace: ""  # monitoring
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2001,7 +1984,7 @@ repoServer:
   name: repo-server
 
   # -- The number of repo server pods to run
-  replicas: 3
+  replicas: 1
 
   ## Repo server Horizontal Pod Autoscaler
   autoscaling:
@@ -2270,7 +2253,7 @@ repoServer:
   ## Repo server metrics service configuration
   metrics:
     # -- Deploy metrics service
-    enabled: true
+    enabled: false
     service:
       # -- Metrics service annotations
       annotations: {}
@@ -2282,7 +2265,7 @@ repoServer:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor interval
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -2290,16 +2273,15 @@ repoServer:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: 
-        matchLabels:
-          app.kubernetes.io/name: argocd-repo-server
+      selector: {}
+        # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "argocd-install" # "monitoring"
+      namespace: "" # "monitoring"
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2424,7 +2406,7 @@ applicationSet:
   ## Metrics service configuration
   metrics:
     # -- Deploy metrics service
-    enabled: true
+    enabled: false
     service:
       # -- Metrics service annotations
       annotations: {}
@@ -2436,7 +2418,7 @@ applicationSet:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor interval
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -2444,16 +2426,15 @@ applicationSet:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: 
-        matchLabels:
-          app.kubernetes.io/name: argocd-metrics
+      selector: {}
+        # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
       tlsConfig: {}
       # -- Prometheus ServiceMonitor namespace
-      namespace: "argocd-install"  # monitoring
+      namespace: ""  # monitoring
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
@@ -2742,7 +2723,7 @@ notifications:
 
   metrics:
     # -- Enables prometheus metrics server
-    enabled: true
+    enabled: false
     # -- Metrics port
     port: 9001
     service:
@@ -2754,15 +2735,15 @@ notifications:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor selector
-      selector: 
-        prometheus: l-argo-metrics
+      selector: {}
+        # prometheus: kube-prometheus
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
       # -- Prometheus ServiceMonitor annotations
       annotations: {}
-      # namespace: argocd-install
+      # namespace: monitoring
       # interval: 30s
       # scrapeTimeout: 10s
       # -- Prometheus ServiceMonitor scheme
