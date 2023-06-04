@@ -4,9 +4,9 @@ metadata:
   name: argocd
 spec: 
   destination:
-    namespace: argocd-install
+    namespace: argocd
     server: https://kubernetes.default.svc
-  project: default
+  project: argocd
   source:
     path: argo-cd/kustomize/
     repoURL: https://github.com/loydpadgett/argoCD.git
