@@ -5,3 +5,5 @@ metadata:
 data:
   timeout.reconciliation: 300s
   accounts.lpadgett: apiKey, login
+  accounts.gitops-ci: apiKey
+  admin.enabled: "false"
