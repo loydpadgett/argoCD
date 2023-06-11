@@ -10,7 +10,7 @@ patches:
 - path: patches/argocd-repo-server-deployment.yaml
 - path: patches/argocd-application-controller-statefulset.yaml
 - path: patches/argocd-rbac-cm.yaml
-- path: resources/metrics/argocd-metrics.yaml
-- path: resources/metrics/argocd-server-metrics.yaml
-- path: resources/metrics/argocd-repo-server-metrics.yaml
-- path: resources/metrics/argocd-appset-controller-metrics.yaml
+- path: patches/metrics/argocd-metrics.yaml
+- path: patches/metrics/argocd-server-metrics.yaml
+- path: patches/metrics/argocd-repo-server-metrics.yaml
+- path: patches/metrics/argocd-appset-controller-metrics.yaml
