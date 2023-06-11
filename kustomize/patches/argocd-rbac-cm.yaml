@@ -12,4 +12,5 @@ data:
     p, role:user-update, projects, update, jenkins, allow
     p, role:user-update, projects, update, wordpress, allow
     p, role:user-update, projects, update, prom-v1, allow
+    p, role:user-update, projects, update, chaos-v1, allow
     g, lpadgett, role:user-update 
